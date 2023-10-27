@@ -38,9 +38,9 @@ class ORBImageComparator:
 
             match_number_threshold = 10
             if len(good_matches) > match_number_threshold:
-                print(f"Image {i + 1} | front | match number: {len(good_matches)}")
+                print(f"Image{i + 1} | Back  | Match number: {len(good_matches)}")
             else:
-                print(f"Image {i + 1} | back  | match number: {len(good_matches)}")
+                print(f"Image{i + 1} | Front | Match number: {len(good_matches)}")
 
         # Display images
         _, axs = plt.subplots(1, len(self.imgs) + 1, figsize=(10, 10))
@@ -56,6 +56,6 @@ class ORBImageComparator:
         plt.show()
 
 if __name__ == "__main__":
-    cardtype = "monopoly"
+    cardtype = "hwatu"
     comparator = ORBImageComparator(cardtype)
     comparator.compare_images_with_backImg()
