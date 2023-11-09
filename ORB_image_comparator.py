@@ -27,6 +27,7 @@ class ORBImageComparator:
 
     def compare_images_with_backImg(self, match_threshold=30):
         bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        titles = []
 
         for i, img in enumerate(self.imgs):
             kp, des = self.orb.detectAndCompute(img, None)
@@ -39,23 +40,29 @@ class ORBImageComparator:
             match_number_threshold = 10
             if len(good_matches) > match_number_threshold:
                 print(f"Image{i + 1} | Back  | Match number: {len(good_matches)}")
+                titles.append(f'img{i + 1} (Back)')
             else:
                 print(f"Image{i + 1} | Front | Match number: {len(good_matches)}")
+                titles.append(f'img{i + 1} (Front)')
 
         # Display images
         _, axs = plt.subplots(1, len(self.imgs) + 1, figsize=(10, 10))
 
-        axs[0].imshow(cv2.cvtColor(self.back_img, cv2.COLOR_BGR2RGB))
+        kp, des = self.orb.detectAndCompute(self.back_img, None)
+        back_img_with_kp = cv2.drawKeypoints(self.back_img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        axs[0].imshow(cv2.cvtColor(back_img_with_kp, cv2.COLOR_BGR2RGB))
         axs[0].set_title('back')
         axs[0].axis('off')
 
         for i, img in enumerate(self.imgs):
-            axs[i + 1].imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-            axs[i + 1].set_title(f'img{i + 1}')
+            kp, des = self.orb.detectAndCompute(img, None)
+            img_with_kp = cv2.drawKeypoints(img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            axs[i + 1].imshow(cv2.cvtColor(img_with_kp, cv2.COLOR_BGR2RGB))
+            axs[i + 1].set_title(titles[i])
             axs[i + 1].axis('off')
         plt.show()
 
 if __name__ == "__main__":
-    cardtype = "hwatu"
+    cardtype = "uno"
     comparator = ORBImageComparator(cardtype)
     comparator.compare_images_with_backImg()
