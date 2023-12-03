@@ -2,7 +2,7 @@
 
 import os
 import cv2
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 class ORBImageComparator:
     def __init__(self, cardtype):
@@ -45,24 +45,24 @@ class ORBImageComparator:
                 print(f"Image{i + 1} | Front | Match number: {len(good_matches)}")
                 titles.append(f'img{i + 1} (Front)')
 
-        # Display images
-        _, axs = plt.subplots(1, len(self.imgs) + 1, figsize=(10, 10))
+        # # Display images
+        # _, axs = plt.subplots(1, len(self.imgs) + 1, figsize=(10, 10))
 
-        kp, des = self.orb.detectAndCompute(self.back_img, None)
-        back_img_with_kp = cv2.drawKeypoints(self.back_img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        axs[0].imshow(cv2.cvtColor(back_img_with_kp, cv2.COLOR_BGR2RGB))
-        axs[0].set_title('back')
-        axs[0].axis('off')
+        # kp, des = self.orb.detectAndCompute(self.back_img, None)
+        # back_img_with_kp = cv2.drawKeypoints(self.back_img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        # axs[0].imshow(cv2.cvtColor(back_img_with_kp, cv2.COLOR_BGR2RGB))
+        # axs[0].set_title('back')
+        # axs[0].axis('off')
 
-        for i, img in enumerate(self.imgs):
-            kp, des = self.orb.detectAndCompute(img, None)
-            img_with_kp = cv2.drawKeypoints(img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            axs[i + 1].imshow(cv2.cvtColor(img_with_kp, cv2.COLOR_BGR2RGB))
-            axs[i + 1].set_title(titles[i])
-            axs[i + 1].axis('off')
-        plt.show()
+        # for i, img in enumerate(self.imgs):
+        #     kp, des = self.orb.detectAndCompute(img, None)
+        #     img_with_kp = cv2.drawKeypoints(img, kp, None, color=(0, 0,255), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        #     axs[i + 1].imshow(cv2.cvtColor(img_with_kp, cv2.COLOR_BGR2RGB))
+        #     axs[i + 1].set_title(titles[i])
+        #     axs[i + 1].axis('off')
+        # plt.show()
 
 if __name__ == "__main__":
-    cardtype = "uno"
+    cardtype = "trump"
     comparator = ORBImageComparator(cardtype)
     comparator.compare_images_with_backImg()
